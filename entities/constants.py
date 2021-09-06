@@ -26,3 +26,10 @@ class BaseRates(Enum):
 class Coin(Enum):
     USD = "us"
     BRL = "brl"
+
+
+class StockExchanges(Enum):
+    B3 = "b3"
+
+class ExchangeRegion(Enum):
+    SAO_PAULO = "SAO"
