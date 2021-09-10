@@ -15,6 +15,7 @@ class Sectors(Enum):
     BANKING = "banking"
     MINING = "mining"
     RETAIL = "retail"
+    ENERGY = "energy"
 
 
 class BaseRates(Enum):
