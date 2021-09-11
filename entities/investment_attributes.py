@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from constants import BaseRates
+from entities.constants import BaseRates
 
 
 @dataclass

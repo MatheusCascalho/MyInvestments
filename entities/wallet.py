@@ -1,30 +1,20 @@
 from typing import List, Tuple, Dict, NoReturn
-from investments import FixedRent, VariableRent
-from constants import InvestmentTypes, Coin, BaseRates
+from entities.investments import FixedRent, VariableRent
+from entities.constants import InvestmentTypes, Coin, BaseRates
 from datetime import date
 import pandas as pd
+from pydantic import BaseModel
 
 
-class Wallet:
-    def __init__(
-            self,
-            money_not_applied: float,
-            rate_table: Dict[BaseRates, float],
-            target: float,
-            creation: date,
-            description: str = str(),
-            fixed_rents: Tuple[FixedRent] = tuple(),
-            variable_rents: Tuple[VariableRent] = tuple(),
-            coin: Coin = Coin.BRL
-    ):
-        self.money_not_applied = money_not_applied
-        self.rate_table = rate_table
-        self.target = target
-        self.creation = creation
-        self.description = description
-        self.fixed_rents = list(fixed_rents)
-        self.variable_rents = list(variable_rents)
-        self.coin = coin
+class Wallet(BaseModel):
+    money_not_applied: float
+    rate_table: Dict[BaseRates, float]
+    target: float
+    creation: date
+    description: str = str()
+    fixed_rents: Tuple[FixedRent] = tuple()
+    variable_rents: Tuple[VariableRent] = tuple()
+    coin: Coin = Coin.BRL
 
     def total(self) -> float:
         ...

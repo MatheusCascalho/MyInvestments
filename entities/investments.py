@@ -1,12 +1,13 @@
 import sys
-sys.path.append("../entities")
-
 import pandas as pd
 from dataclasses import dataclass
 from datetime import date
-from constants import VariableRentTypes, Sectors
-from investment_attributes import Rent
+from entities.constants import VariableRentTypes, Sectors
+from entities.investment_attributes import Rent
 from abc import abstractmethod
+from pydantic import BaseModel
+
+sys.path.append("../entities")
 
 
 @dataclass
@@ -41,5 +42,3 @@ class VariableRent(Investment):
 
     def current_value(self) -> float:
         ...
-
-
