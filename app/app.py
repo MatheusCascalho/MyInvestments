@@ -1,7 +1,10 @@
 from flask import Flask
 import json
+from flask_pydantic_spec import FlaskPydanticSpec
 
 server = Flask(__name__)
+spec = FlaskPydanticSpec('flask', title='MyInvestments')
+spec.register(server)
 
 
 @server.get('/wallets')
