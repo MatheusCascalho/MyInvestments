@@ -8,6 +8,7 @@ from constants import VariableRentTypes, Sectors
 from investment_attributes import Rent
 from abc import abstractmethod
 
+
 @dataclass
 class Investment:
     title: str

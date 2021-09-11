@@ -31,7 +31,7 @@ taee11 = VariableRent(
 )
 
 rate_table = {
-    BaseRates.SELIC: 5.25
+    BaseRates.SELIC.value: 5.25
 }
 
 marriage_wallet = Wallet(
@@ -47,15 +47,27 @@ marriage_wallet = Wallet(
 import json
 from enum import Enum
 from typing import Any
+from dataclasses import is_dataclass, asdict
 
 
 class Encoder(json.JSONEncoder):
     def default(self, o: Any) -> Any:
-        if isinstance(o, Enum):
-            return o.name.lower()
+        transformations = {
+            "Enum": lambda x: x.name.lower(),
+            "datetime": str,
+            "dataclass": asdict
+        }
+        if is_dataclass(o):
+            class_name = "dataclass"
+        elif isinstance(o, Enum):
+            class_name = "Enum"
+        else:
+            class_name = o.__class__.__name__
+        if class_name in transformations:
+            return transformations[class_name](o)
         else:
             return json.JSONEncoder.default(self, o)
 
 
 with open('data.json', 'w') as output:
-    json.dump(marriage_wallet.__dict__, output, cls=Encoder)
+    json.dump(marriage_wallet.__dict__, output, cls=Encoder, indent=2, ensure_ascii=False)
