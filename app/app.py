@@ -67,7 +67,7 @@ def test():
     Test database insertion
     :return:
     """
-    body = VariableRent(**request.context.body.dict()).dict()
+    body = request.context.body.dict()
     database.insert(body)
     report = WalletReport(
         balance=500,
@@ -75,6 +75,23 @@ def test():
         taxes=200 + body['amount']
     ).dict()
     return report
+
+@server.put('/investments/<string:title>')
+@spec.validate(
+    body=Request(VariableRent), resp=Response(HTTP_200=VariableRent)
+)
+def change_investment(title):
+    VariableRent = Query()
+    body = request.context.body.dict()
+    database.update(body, VariableRent.title == title)
+    return jsonify(body)
+
+@server.delete('/investmets/<string:title>')
+@spec.validate(resp=Response('HTTP_204'))
+def delete_investment(title):
+    VariableRent = Query()
+    database.remove(VariableRent.title == title)
+    return jsonify({})
 
 
 server.run()
