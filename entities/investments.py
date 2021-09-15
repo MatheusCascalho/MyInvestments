@@ -10,8 +10,7 @@ from pydantic import BaseModel
 sys.path.append("../entities")
 
 
-@dataclass
-class Investment:
+class Investment(BaseModel):
     title: str
     unitary_value: float
     amount: int
@@ -22,8 +21,11 @@ class Investment:
         pass
 
 
-@dataclass
-class FixedRent(Investment):
+class FixedRent(BaseModel):
+    title: str
+    unitary_value: float
+    amount: int
+    acquisition: date
     rent: Rent
     liquidity: int
     due_date: date
@@ -33,8 +35,11 @@ class FixedRent(Investment):
         ...
 
 
-@dataclass
-class VariableRent(Investment):
+class VariableRent(BaseModel):
+    title: str
+    unitary_value: float
+    amount: int
+    acquisition: date
     type: VariableRentTypes
     company: str
     sector: Sectors

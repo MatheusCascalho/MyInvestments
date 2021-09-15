@@ -39,3 +39,9 @@ class Wallet(BaseModel):
 
     def save(self) -> NoReturn:
         ...
+
+
+class WalletReport(BaseModel):
+    balance: float
+    profit: float
+    taxes: float
