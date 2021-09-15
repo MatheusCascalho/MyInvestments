@@ -5,7 +5,8 @@ from datetime import date
 from entities.constants import VariableRentTypes, Sectors
 from entities.investment_attributes import Rent
 from abc import abstractmethod
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Optional
 
 sys.path.append("../entities")
 
@@ -34,8 +35,16 @@ class FixedRent(BaseModel):
     def current_value(self):
         ...
 
+def id_generator():
+    i = 0
+    while True:
+        i+= 1
+        yield i
+
+generator = id_generator()
 
 class VariableRent(BaseModel):
+    id: Optional[int] = Field(default_factory=lambda: next(generator))
     title: str
     unitary_value: float
     amount: int
