@@ -6,7 +6,7 @@ from entities.constants import VariableRentTypes, Sectors
 from entities.investment_attributes import Rent
 from abc import abstractmethod
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List, Dict
 
 sys.path.append("../entities")
 
@@ -60,3 +60,10 @@ class VariableRent(BaseModel):
 
     def current_value(self) -> float:
         ...
+
+
+class VariableRentHistory(BaseModel):
+    name: str
+    history: Optional[List[Dict[date, float]]] = Field(default_factory=list)
+
+
