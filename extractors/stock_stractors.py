@@ -7,11 +7,11 @@ from entities.constants import ExchangeRegion
 token_path = "../data/token.json"
 
 
-def stock_history(
+def download_stock_history(
         stock: str,
-        size: int,
-        exchange_region: ExchangeRegion = ExchangeRegion.SAO_PAULO
-) -> pd.DataFrame:
+        exchange_region: ExchangeRegion = ExchangeRegion.SAO_PAULO,
+        path: str = '../data/'
+) -> str:
     with open(token_path, 'r') as file:
         data = json.load(file)
         api_access = data['access_key']
@@ -21,11 +21,13 @@ def stock_history(
     url = f"https://{host}/query?function={function}&symbol={stock}.{exchange_region.value}"
     url += f"&apikey={api_access}&datatype=csv"
     response = requests.get(url)
-    with open(f"{stock}.csv", 'wb') as f:
+    filename = f"{stock}.csv"
+    with open(filename, 'wb') as f:
         for chunk in response.iter_content(chunk_size=1024):
             if chunk:  # filter out keep-alive new chunks
                 f.write(chunk)
-    print(response)
+    filepath = path + filename
+    return filepath
 
 
 
