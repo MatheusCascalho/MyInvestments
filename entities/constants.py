@@ -16,12 +16,14 @@ class Sectors(Enum):
     MINING = "mining"
     RETAIL = "retail"
     ENERGY = "energy"
+    PAPER_FUND = "paper fund"
 
 
 class BaseRates(Enum):
     SELIC = "selic"
     CDB = "cdb"
     IPCA = "ipca"
+    CDI = "cdi"
 
 
 class Coin(Enum):

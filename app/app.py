@@ -19,7 +19,36 @@ spec = FlaskPydanticSpec('flask', title='MyInvestments')
 spec.register(server)
 
 database = TinyDB(filename='database.json', ensure_ascii=False, storage=YAMLStorage)
+variable_rents_db = TinyDB('variable_rents_db.json', ensure_ascii=False, storage=YAMLStorage)
+fixed_rents_db = TinyDB('fixed_rents_db.json', ensure_ascii=False, storage=YAMLStorage)
 
+
+@server.post('/add_variable_rent')
+@spec.validate(body=Request(VariableRent))
+def add_variable_rend():
+    """
+    Add and investment in wallet
+    :return:
+    """
+    body = request.context.body.dict()
+    # body =
+    variable_rents_db.insert(body)
+
+    return {"message": "Investment successfully added"}
+
+
+@server.post('/add_fixed_rent')
+@spec.validate(body=Request(FixedRent))
+def add_fixed_rent():
+    """
+    Add and investment in wallet
+    :return:
+    """
+    body = request.context.body.dict()
+    # body =
+    fixed_rents_db.insert(body)
+
+    return {"message": "Investment successfully added"}
 
 
 @server.get('/wallets')
