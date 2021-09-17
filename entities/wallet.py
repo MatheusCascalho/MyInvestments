@@ -1,9 +1,9 @@
-from typing import List, Tuple, Dict, NoReturn
+from typing import List, Tuple, Dict, NoReturn, Optional
 from entities.investments import FixedRent, VariableRent
 from entities.constants import InvestmentTypes, Coin, BaseRates
 from datetime import date
 import pandas as pd
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class Wallet(BaseModel):
@@ -12,9 +12,13 @@ class Wallet(BaseModel):
     target: float
     creation: date
     description: str = str()
-    fixed_rents: Tuple[FixedRent] = tuple()
-    variable_rents: Tuple[VariableRent] = tuple()
+    fixed_rents: Optional[List[FixedRent]] = Field(default_factory=tuple)
+    variable_rents: Optional[List[VariableRent]] = Field(default_factory=tuple)
     coin: Coin = Coin.BRL
+
+    def update_investment_values(self):
+        for investment in self.variable_rents:
+            investment.update_history()
 
     def total(self) -> float:
         ...

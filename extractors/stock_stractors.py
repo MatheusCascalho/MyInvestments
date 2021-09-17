@@ -10,7 +10,8 @@ token_path = "../data/token.json"
 def download_stock_history(
         stock: str,
         exchange_region: ExchangeRegion = ExchangeRegion.SAO_PAULO,
-        path: str = '../data/'
+        path: str = '../data/',
+        outputsize: str = "full"
 ) -> str:
     with open(token_path, 'r') as file:
         data = json.load(file)
@@ -19,16 +20,16 @@ def download_stock_history(
 
     host = "www.alphavantage.co"
     url = f"https://{host}/query?function={function}&symbol={stock}.{exchange_region.value}"
-    url += f"&apikey={api_access}&datatype=csv"
+    url += f"&outputsize={outputsize}&apikey={api_access}&datatype=csv"
     response = requests.get(url)
     filename = f"{stock}.csv"
-    with open(filename, 'wb') as f:
+    filepath = path + filename
+    with open(filepath, 'wb') as f:
         for chunk in response.iter_content(chunk_size=1024):
             if chunk:  # filter out keep-alive new chunks
                 f.write(chunk)
-    filepath = path + filename
-    return filepath
 
+    return filepath
 
 
 if __name__ == "__main__":
@@ -47,4 +48,5 @@ if __name__ == "__main__":
     # data = response.json()
     # pprint(data)
 
-    stock_history('VALE3', 4)
+    file = download_stock_history('MXRF11')
+    print(pd.read_csv(file))

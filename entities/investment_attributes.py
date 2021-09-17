@@ -1,3 +1,4 @@
+import datetime
 from dataclasses import dataclass
 from entities.constants import BaseRates
 
@@ -13,3 +14,8 @@ class Rent:
     def total(self) -> float:
         ...
 
+
+@dataclass
+class ValueRegister:
+    date: datetime.date
+    value: float
