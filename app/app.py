@@ -6,11 +6,12 @@ from flask_pydantic_spec import (
     Request
 )
 from entities.wallet import Wallet, WalletReport
-from entities.investments import FixedRent, VariableRent
+from entities.investments import FixedRent, VariableRent, VariableRentTypes, Sectors
 from tinydb import TinyDB, Query
 from tinydb.storages import JSONStorage
 from tinydb_serialization import SerializationMiddleware
 from middleware import YAMLStorage, Encoder
+from typing import List
 
 
 server = Flask(__name__)
@@ -21,6 +22,7 @@ spec.register(server)
 database = TinyDB(filename='database.json', ensure_ascii=False, storage=YAMLStorage)
 variable_rents_db = TinyDB('variable_rents_db.json', ensure_ascii=False, storage=YAMLStorage)
 fixed_rents_db = TinyDB('fixed_rents_db.json', ensure_ascii=False, storage=YAMLStorage)
+wallets_db = TinyDB('wallets_db.json', ensure_ascii=False, storage=YAMLStorage)
 
 
 @server.post('/add_variable_rent')
@@ -58,6 +60,7 @@ def get_wallet():
         response = json.load(data)
     return response
 
+
 @server.get('/investments')
 # @spec.validate(resp=Response(HTTP_200=VariableRent))
 def all_investments():
@@ -69,8 +72,6 @@ def all_investments():
     return registers
 
 
-
-
 @server.post('/add_investment')
 @spec.validate(body=Request(FixedRent), resp=Response(HTTP_200=WalletReport))
 def add_investment():
@@ -78,7 +79,7 @@ def add_investment():
     Add and investment in wallet
     :return:
     """
-    body = request.context.body.json()
+    body = request.context.body.dict()
     # body =
     database.insert(body)
     report = WalletReport(
@@ -87,6 +88,26 @@ def add_investment():
         taxes=200 + body['amount']
     )
     return report.dict()
+
+
+@server.post('/add_wallet')
+@spec.validate(body=Request(Wallet))
+def add_wallet():
+    """
+    Add and investment in wallet
+    :return:
+    """
+    body: Wallet = Wallet.parse_obj(request.context.body.dict())
+    body.fixed_rents = fixed_rents_db.all()
+    body.variable_rents = variable_rents_db.all()
+
+    encoder = Encoder()
+    body = encoder.decode_dictionaries(body.dict())
+    # body
+    wallets_db.insert(body)
+
+    return Wallet.parse_obj(body)
+
 
 
 @server.post('/test')
@@ -105,6 +126,7 @@ def test():
     ).dict()
     return report
 
+
 @server.put('/investments/<string:title>')
 @spec.validate(
     body=Request(VariableRent), resp=Response(HTTP_200=VariableRent)
@@ -115,6 +137,7 @@ def change_investment(title):
     database.update(body, VariableRent.title == title)
     return jsonify(body)
 
+
 @server.delete('/investmets/<string:title>')
 @spec.validate(resp=Response('HTTP_204'))
 def delete_investment(title):
@@ -124,3 +147,14 @@ def delete_investment(title):
 
 
 server.run()
+
+if __name__ == "__main__":
+    ...
+    # investments = variable_rents_db.all()
+    # for investment in investments:
+    #     investment['type'] = VariableRentTypes[investment['type'].upper()]
+    #     investment['sector'] = Sectors[investment['sector'].upper()]
+    # investments: List[VariableRent] = [VariableRent.parse_obj(data) for data in investments]
+    # for investment in investments:
+    #     investment.update_history()
+    # print(investments[0])
