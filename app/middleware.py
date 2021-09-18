@@ -4,16 +4,19 @@ from typing import Dict, Any
 from tinydb.storages import Storage
 from dataclasses import asdict, is_dataclass
 from enum import Enum
+from flask import jsonify
 
 
 class Encoder(json.JSONEncoder):
     OBJ_CLASS = Any
+
     def default(self, o: Any) -> Any:
         transformations = {
             "Enum": lambda x: x.name.lower(),
             "datetime": str,
             "date": str,
-            "dataclass": asdict
+            "dataclass": asdict,
+            "dict": self.decode_dictionaries,
         }
         if is_dataclass(o):
             class_name = "dataclass"
@@ -23,8 +26,17 @@ class Encoder(json.JSONEncoder):
             class_name = o.__class__.__name__
         if class_name in transformations:
             return transformations[class_name](o)
-        else:
-            return json.JSONEncoder.default(self, o)
+        return o
+        # return str(o)
+
+    def decode_dictionaries(self, dictionary):
+        original_keys = list(dictionary.keys())
+        new_dictionary = {}
+        for key in dictionary:
+            new_dictionary[str(key)] = self.default(dictionary[key])
+
+        return new_dictionary
+
 
 
 class YAMLStorage(Storage):
