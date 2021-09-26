@@ -75,7 +75,7 @@ class VariableRent(BaseModel):
             )
             last_day = history['day'].values[0]
             filtered_history = history[history['day'] == last_day]
-            self.history = list(filtered_history[['timestamp', 'mean']].values)[:5]
+            self.history = filtered_history[['timestamp', 'mean']].values[:5, :].tolist()
             history.to_csv(file)
         else:
             print(f"Problems to download {self.title} data")
