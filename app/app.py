@@ -56,8 +56,11 @@ def add_fixed_rent():
 @server.get('/wallets')
 # @spec.validate(resp=Response(HTTP_200=Wallet))
 def get_wallet():
-    with open('data.json', 'r') as data:
-        response = json.load(data)
+    from_database = jsonify(wallets_db.all()).json[0]
+    wallet = Wallet.parse_obj(from_database)
+    wallet.update_investment_values()
+    encoder = Encoder()
+    response = encoder.decode_dictionaries(wallet.dict())
     return response
 
 
@@ -68,7 +71,13 @@ def all_investments():
     Return all registers in database
     :return:
     """
-    registers = jsonify(database.all())
+    variable_rents = jsonify(variable_rents_db.all())
+    fixed_rents = jsonify(fixed_rents_db.all())
+    registers = {
+        "fixed_rent": fixed_rents.json,
+        "variable_rents": variable_rents.json
+    }
+
     return registers
 
 
