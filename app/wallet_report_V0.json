@@ -1,0 +1,113 @@
+{
+  "variable_rents": [
+    {
+      "type": "stock",
+      "sector": "mining",
+      "title": "VALE3",
+      "acquisition": "01/10/2021",
+      "purchase_price_by_unit": 80.9,
+      "current_value_by_unit": 100.89,
+      "units": 3,
+      "purchase_price": 240.8,
+      "current_value": 300,
+      "profit": 0.3,
+      "id": 1
+    }
+  ],
+  "fixed_rents": [
+    {
+      "id": 1,
+      "acquisition": "01/05/2020",
+      "title": "selic 2025",
+      "base_rent": "selic",
+      "extra_rent": 0,
+      "purchase_price": 100.5,
+      "current_value": 101.5,
+      "due_date": "01/05/2025",
+      "current_tax": 0.25,
+      "liquidity": "d_plus_1"
+    }
+  ],
+  "summary": {
+    "applied_value": 504.5,
+    "gross_profit": 10.5,
+    "taxes": 0.25,
+    "liquidy_profit": 10.25
+  },
+  "history": [
+    {
+      "target": 500.45,
+      "credit": 40.2,
+      "debit": 0,
+      "balance": 40.2,
+      "balance_with_profit": 40.5
+    }
+  ],
+  "distribution_by_sector": {
+    "mining": 0.75,
+    "bank": 0.1,
+    "govenment": 0.15
+  },
+  "distribution_by_title": {
+    "VALE3": 0.75,
+    "BBAS3": 0.1,
+    "SELIC2025": 0.15
+  },
+  "distribution_by_nature": {
+    "variable_rent": 0.85,
+    "fixed_rent": 0.15
+  },
+  "evolution_by_sector": [
+    {
+      "title": "BBAS3",
+      "data": [
+        {
+          "date": "05/2021",
+          "value": 100.5
+        },
+        {
+          "date": "06/2021",
+          "value": 100.5
+        },
+        {
+          "date": "06/2021",
+          "value": 100.5
+        }
+      ]
+    },
+    {
+      "title": "VALE3",
+      "data": [
+        {
+          "date": "05/2021",
+          "value": 100.5
+        },
+        {
+          "date": "06/2021",
+          "value": 200.45
+        },
+        {
+          "date": "06/2021",
+          "value": 100.5
+        }
+      ]
+    },
+    {
+      "title": "SELIC2025",
+      "data": [
+        {
+          "date": "05/2021",
+          "value": 50.45
+        },
+        {
+          "date": "06/2021",
+          "value": 100.5
+        },
+        {
+          "date": "06/2021",
+          "value": 100.5
+        }
+      ]
+    }
+  ]
+}
