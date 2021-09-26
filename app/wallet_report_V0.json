@@ -41,6 +41,27 @@
       "debit": 0,
       "balance": 40.2,
       "balance_with_profit": 40.5
+    },
+    {
+      "target": 500.45,
+      "credit": 40.2,
+      "debit": 0,
+      "balance": 40.2,
+      "balance_with_profit": 40.5
+    },
+    {
+      "target": 500.45,
+      "credit": 40.2,
+      "debit": 0,
+      "balance": 40.2,
+      "balance_with_profit": 40.5
+    },
+    {
+      "target": 500.45,
+      "credit": 40.2,
+      "debit": 0,
+      "balance": 40.2,
+      "balance_with_profit": 40.5
     }
   ],
   "distribution_by_sector": {
