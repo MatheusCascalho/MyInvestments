@@ -10,6 +10,7 @@ class AssetEvolution(BaseModel):
 
 
 class HistoryRegister(BaseModel):
+    date: str
     target: float
     credit: float
     debit: float

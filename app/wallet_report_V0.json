@@ -38,30 +38,34 @@
     {
       "target": 500.45,
       "credit": 40.2,
-      "debit": 0,
-      "balance": 40.2,
-      "balance_with_profit": 40.5
+      "debit": 25,
+      "balance": 39.2,
+      "balance_with_profit": 42,
+      "date": "01/2020"
     },
     {
       "target": 500.45,
       "credit": 40.2,
       "debit": 0,
       "balance": 40.2,
-      "balance_with_profit": 40.5
+      "balance_with_profit": 40.8,
+      "date": "02/2020"
     },
     {
       "target": 500.45,
       "credit": 40.2,
       "debit": 0,
-      "balance": 40.2,
-      "balance_with_profit": 40.5
+      "balance": 38.2,
+      "balance_with_profit": 40.5,
+      "date": "03/2020"
     },
     {
       "target": 500.45,
       "credit": 40.2,
-      "debit": 0,
+      "debit": 48,
       "balance": 40.2,
-      "balance_with_profit": 40.5
+      "balance_with_profit": 41.75,
+      "date": "04/2020"
     }
   ],
   "distribution_by_sector": {
