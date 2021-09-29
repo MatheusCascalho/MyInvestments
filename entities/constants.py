@@ -59,5 +59,18 @@ class Coin(OrderedEnum):
 class StockExchanges(OrderedEnum):
     B3 = "b3"
 
+
 class ExchangeRegion(OrderedEnum):
     SAO_PAULO = "SAO"
+
+
+class ExchangeOperation(OrderedEnum):
+    BUY = "buy"
+    SELL = "sell"
+    DUE_DATE = "due date"
+    TRANSFER = "transfer"
+
+
+class InvestmentNature(OrderedEnum):
+    FIXED = "fixed"
+    VARIABLE = "variable"
