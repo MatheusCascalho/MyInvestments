@@ -34,4 +34,11 @@ def get_wallet():
     return data
 
 
+@server.get('/dummy_report')
+# @spec.validate(resp=Response(HTTP_200=Wallet))
+def get_wallet():
+    with open('wallet_report_V0.json', 'r') as file:
+        data = json.load(file)
+    return data
+
 server.run()
